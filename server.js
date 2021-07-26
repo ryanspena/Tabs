@@ -2,15 +2,15 @@ const express = require('express');
 const {ApolloServer} = require('apollo-server-express');
 const path = require('path');
 
-const typeDefs = require('./schemas/typeDefs');
-const resolvers = require('./schemas/resolvers');
-const {authMiddleware} = require('./utils/auth');
+// const typeDefs = require('./schemas/typeDefs');
+const resolvers = require('./server/schemas/resolvers');
+const {authMiddleware} = require('./server/utils/auth');
 const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
-  typeDefs,
+  // typeDefs,
   resolvers,
   context: authMiddleware
 });
@@ -35,3 +35,10 @@ db.once('open', () => {
     console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
   });
 });
+
+module.exports = {
+  MONGODB:
+    "mongodb+srv://andibuzzi:4oktPiuIaTXVyQc0@cluster0.xc54p.mongodb.net/tabs?retryWrites=true",
+  SECRET_KEY: "some very secret key",
+};
+
